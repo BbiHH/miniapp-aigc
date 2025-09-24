@@ -1,0 +1,88 @@
+<t-navbar title="发布动态" left-arrow />
+<view class="page">
+  <view class="release-container">
+
+    <!-- 1. 视频展示块 -->
+    <view class="video box">
+      <!-- 这里可以是上传后的视频展示，如果还没上传，放个占位 -->
+      <view class="video-placeholder">
+        <text>点击上传或展示视频</text>
+      </view>
+    </view>
+
+    <!-- 2. 添加描述 -->
+    <view class="desc box">
+      <view class="desc-label">添加描述</view>
+      <t-textarea
+        t-class="desc-class"
+        t-class-textarea="placeholder-class"
+        placeholder="分享你此刻的想法"
+        maxlength="500"
+        disableDefaultPadding="{{true}}"
+        indicator
+      />
+    </view>
+
+    <!-- 3. 选择时长（单选） -->
+    <view class="taggroup box">
+      <t-cell t-class-title="cell-title-class" t-class-note="cell-note-class" title="选择时长">
+        <block wx:for="{{durationOptions}}" wx:key="index">
+          <t-check-tag
+            t-class="tag-class"
+            size="medium"
+            variant="dark"
+            content="{{item}}"
+            checked="{{selectedDuration === item}}"
+            bind:change="onDurationChange"
+            slot="note"
+          />
+        </block>
+      </t-cell>
+    </view>
+
+    <!-- 4. 选择声音 -->
+    <view class="voice box">
+      <t-cell title="选择声音">
+        <picker mode="selector" range="{{voiceOptions}}" bindchange="onVoiceSelect">
+          <view class="voice-picker">
+            {{selectedVoice || '请选择声音'}}
+          </view>
+        </picker>
+      </t-cell>
+    </view>
+
+    <!-- 5. 上传图片 -->
+    <view class="upload box">
+      <t-upload
+        t-class="upload-class"
+        media-type="{{['image']}}"
+        files="{{originFiles}}"
+        gridConfig="{{gridConfig}}"
+        max="4"
+        bind:success="handleSuccess"
+        bind:remove="handleRemove"
+      />
+    </view>
+
+    <!-- 6. 按钮组 -->
+    <view class="btngroup box">
+      <t-button
+        t-class="btn-class"
+        theme="light"
+        icon="file-copy"
+        content="存草稿"
+        size="large"
+        bindtap="saveDraft"
+      />
+      <t-button
+        t-class="btn-class"
+        theme="primary"
+        icon="upload"
+        content="发布"
+        size="large"
+        bindtap="release"
+      />
+    </view>
+
+  </view>
+</view>

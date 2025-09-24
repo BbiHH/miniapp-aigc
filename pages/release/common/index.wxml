@@ -1,0 +1,77 @@
+<t-navbar title="生成作品" left-arrow />
+<view class="page">
+
+  <view class="release-container">
+
+    <!-- 1. 视频展示 / 上传 -->
+    <view class="video box">
+      <t-upload
+        media-type="{{['video']}}"
+        files="{{originFiles}}"
+        gridConfig="{{gridConfig}}"
+        max="1"
+        bind:success="handleVideoSuccess"
+        bind:remove="handleVideoRemove"
+      />
+    </view>
+
+    <!-- 2. 添加描述 -->
+    <view class="desc box">
+      <view class="desc-label">添加描述</view>
+      <t-textarea
+        placeholder="请输入作品描述"
+        maxlength="500"
+        value="{{desc}}"
+        bind:input="onDescInput"
+        indicator
+      />
+    </view>
+
+    <!-- 3. 选择语音 -->
+    <view class="voice box">
+      <t-cell title="选择语音">
+        <picker mode="selector" range="{{voiceOptions}}" bindchange="onVoiceSelect">
+          <view class="voice-picker">
+            {{selectedVoice || '请选择语音'}}
+          </view>
+        </picker>
+      </t-cell>
+    </view>
+
+    <!-- 4. 添加标题 -->
+    <view class="title box">
+      <t-input
+        label="标题"
+        placeholder="请输入作品标题"
+        value="{{title}}"
+        bind:input="onTitleInput"
+      />
+    </view>
+
+    <!-- 5. 主题风格 -->
+    <view class="taggroup box">
+      <t-cell title="主题风格">
+        <block wx:for="{{tags}}" wx:key="index">
+          <t-check-tag
+            size="medium"
+            variant="dark"
+            default-checked="{{index===0}}"
+            content="#{{item}}"
+            slot="note"
+          />
+        </block>
+      </t-cell>
+    </view>
+
+    <!-- 6. 按钮 -->
+    <view class="btngroup box">
+      <t-button
+        theme="primary"
+        size="large"
+        content="生成"
+        bindtap="onGenerate"
+      />
+    </view>
+
+  </view>
+</view>
